@@ -2,7 +2,6 @@
 using System.Reflection;
 using AOC2024;
 
-var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Day1\input.txt");
 var lines = Helper.GetInput(1);
 var stopwatch = new Stopwatch();
 stopwatch.Start();
@@ -48,7 +47,6 @@ Console.WriteLine("Total Runtime:");
 Console.WriteLine(stopwatch.Elapsed);
 
 // Day 2
-filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Day2\input.txt");
 lines = Helper.GetInput(2);
 stopwatch.Restart();
 var safeCount = 0;
