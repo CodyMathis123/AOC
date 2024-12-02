@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AOC2024.Day1
+﻿namespace AOC2024.Day1
 {
     internal class Day1Solution : AOCSolution
     {
@@ -13,9 +6,8 @@ namespace AOC2024.Day1
 
         public override void Solve()
         {
-            _stopwatch.Start();
             var lines = GetInput();
-
+            _stopwatch.Start();
             List<int> left = new(lines.Length);
             List<int> right = new(lines.Length);
 
@@ -42,7 +34,11 @@ namespace AOC2024.Day1
             Console.WriteLine("Part 1:");
             Console.WriteLine(totalDistance);
 
+            _stopwatch.Stop();
+            Console.WriteLine($"Elapsed: {_stopwatch.Elapsed}");
+
             // Part 2
+            _stopwatch.Restart();
             var totalSimilarity = 0;
             foreach (int number in left)
             {
@@ -50,11 +46,8 @@ namespace AOC2024.Day1
             }
             Console.WriteLine("Part 2:");
             Console.WriteLine(totalSimilarity);
-
             _stopwatch.Stop();
-
-            Console.WriteLine("Total Runtime:");
-            Console.WriteLine(_stopwatch.Elapsed);
+            Console.WriteLine($"Elapsed: {_stopwatch.Elapsed}");
 
         }
     }

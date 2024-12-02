@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AOC2024.Day2
+﻿namespace AOC2024.Day2
 {
     internal class Day2Solution : AOCSolution
     {
@@ -13,8 +6,9 @@ namespace AOC2024.Day2
 
         public override void Solve()
         {
-            _stopwatch.Start();
             var lines = GetInput();
+
+            _stopwatch.Start();
             var safeCount = 0;
             var unsafeLines = new List<string>();
 
@@ -31,15 +25,12 @@ namespace AOC2024.Day2
                 }
             }
 
-            Console.WriteLine("Day2");
             Console.WriteLine("Part 1:");
             Console.WriteLine(safeCount);
             _stopwatch.Stop();
+            Console.WriteLine($"Elapsed: {_stopwatch.Elapsed}");
 
-            Console.WriteLine("Total Runtime:");
-            Console.WriteLine(_stopwatch.Elapsed);
             _stopwatch.Restart();
-
             foreach (string line in unsafeLines)
             {
                 var report = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
@@ -49,13 +40,11 @@ namespace AOC2024.Day2
                 }
             }
 
-            Console.WriteLine("Day2");
             Console.WriteLine("Part 2:");
             Console.WriteLine(safeCount);
-            _stopwatch.Stop();
 
-            Console.WriteLine("Total Runtime:");
-            Console.WriteLine(_stopwatch.Elapsed);
+            _stopwatch.Stop();
+            Console.WriteLine($"Elapsed: {_stopwatch.Elapsed}");
 
             static bool IsSafe(List<int> report)
             {
