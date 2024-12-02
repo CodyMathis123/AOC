@@ -1,8 +1,14 @@
-﻿using AOC2024.Day1;
-using AOC2024.Day2;
+﻿using AOC2024;
 
-var day1 = new Day1Solution();
-day1.Solve();
+var solutions = typeof(Program).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(AOCSolution).IsAssignableFrom(t)).ToArray();
 
-var day2 = new Day2Solution();
-day2.Solve();
+var commands = solutions
+    .Where(type =>
+        type.GetConstructor(Type.EmptyTypes) != null &&
+         !type.IsAbstract && typeof(AOCSolution).IsAssignableFrom(type))
+    .Select(type => Activator.CreateInstance(type) as AOCSolution)
+    .OrderBy(c => c.Day);
+foreach (var command in commands)
+{
+    command?.Solve();
+}
