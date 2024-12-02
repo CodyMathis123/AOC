@@ -2,7 +2,6 @@
 using System.Reflection;
 using AOC2024;
 
-
 var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Day1\input.txt");
 var lines = Helper.GetInput(1);
 var stopwatch = new Stopwatch();
@@ -48,26 +47,17 @@ stopwatch.Stop();
 Console.WriteLine("Total Runtime:");
 Console.WriteLine(stopwatch.Elapsed);
 
-
 // Day 2
 filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Day2\input.txt");
 lines = Helper.GetInput(2);
 stopwatch.Restart();
 var safeCount = 0;
 var unsafeLines = new List<string>();
-foreach(string line in lines)
-{
-    var report = line.Split([' ']).Select(int.Parse).ToList();
-    var orderedDictionary = new Dictionary<int, int>();
-    var step = 0;
-    foreach (var pair in report)
-    {
-        orderedDictionary.Add(step, pair);
-        step++;
-    }
 
-    var direction = orderedDictionary[0] < orderedDictionary[1] ? "Increasing" : "Decreasing";
-    if (orderedDictionary.All((Func<KeyValuePair<int, int>, bool>)Safe(report, direction)))
+foreach (string line in lines)
+{
+    var report = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+    if (IsSafe(report))
     {
         safeCount++;
     }
@@ -76,6 +66,7 @@ foreach(string line in lines)
         unsafeLines.Add(line);
     }
 }
+
 Console.WriteLine("Day2");
 Console.WriteLine("Part 1:");
 Console.WriteLine(safeCount);
@@ -84,39 +75,16 @@ stopwatch.Stop();
 Console.WriteLine("Total Runtime:");
 Console.WriteLine(stopwatch.Elapsed);
 stopwatch.Restart();
+
 foreach (string line in unsafeLines)
 {
-    var report = line.Split([' ']).Select(int.Parse).ToList();
-    var orderedDictionary = new Dictionary<int, int>();
-    var step = 0;
-    foreach (var pair in report)
+    var report = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+    if (IsSafeWithOneSkip(report))
     {
-        orderedDictionary.Add(step, pair);
-        step++;
-    }
-
-
-    for (int i = 0; i < orderedDictionary.Count; i++)
-    {
-        report = line.Split([' ']).Select(int.Parse).ToList();
-        report.RemoveAt(i);
-        var oneRemoved = orderedDictionary.Where(b => b.Key != i).ToDictionary();
-        var reindex = new Dictionary<int, int>();
-        var restep = 0;
-        foreach (var newpair in oneRemoved)
-        {
-            reindex.Add(restep, newpair.Value);
-            restep++;
-        }
-        var direction = reindex[0] < reindex[1] ? "Increasing" : "Decreasing";
-        if (reindex.All((Func<KeyValuePair<int, int>, bool>)Safe(report, direction)))
-        {
-            safeCount++;
-            break;
-        }
-
+        safeCount++;
     }
 }
+
 Console.WriteLine("Day2");
 Console.WriteLine("Part 2:");
 Console.WriteLine(safeCount);
@@ -125,20 +93,41 @@ stopwatch.Stop();
 Console.WriteLine("Total Runtime:");
 Console.WriteLine(stopwatch.Elapsed);
 
-static Func<KeyValuePair<int, int>, bool> Safe(List<int> report, string direction)
+static bool IsSafe(List<int> report)
 {
-    return e =>
+    bool increasing = true;
+    bool decreasing = true;
+
+    for (int i = 1; i < report.Count; i++)
     {
-        var myIndex = e.Key;
-        if (myIndex == 0) { return true; }
-        var prevValue = report[myIndex - 1];
-        var diff = Math.Abs(e.Value - prevValue);
-        if (diff == 0)
+        int diff = report[i] - report[i - 1];
+        if (diff == 0 || Math.Abs(diff) > 3)
         {
             return false;
         }
-        var alwaysIncreasing = e.Value > prevValue && diff <= 3;
-        var alwaysDecreasing = e.Value < prevValue && diff <= 3;
-        return (alwaysDecreasing && direction == "Decreasing") || (alwaysIncreasing && direction == "Increasing");
-    };
+        if (diff < 0)
+        {
+            increasing = false;
+        }
+        if (diff > 0)
+        {
+            decreasing = false;
+        }
+    }
+
+    return increasing || decreasing;
+}
+
+static bool IsSafeWithOneSkip(List<int> report)
+{
+    for (int i = 0; i < report.Count; i++)
+    {
+        var modifiedReport = new List<int>(report);
+        modifiedReport.RemoveAt(i);
+        if (IsSafe(modifiedReport))
+        {
+            return true;
+        }
+    }
+    return false;
 }
