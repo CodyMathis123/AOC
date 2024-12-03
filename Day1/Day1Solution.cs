@@ -3,52 +3,50 @@
     internal class Day1Solution : AOCSolution
     {
         public override int Day => 1;
+        private readonly string[] _lines;
+        private List<int>? _left;
+        private List<int>? _right;
 
-        public override void Solve()
+        public Day1Solution()
         {
-            var lines = GetInput();
-            _stopwatch.Start();
-            List<int> left = new(lines.Length);
-            List<int> right = new(lines.Length);
+            _lines = GetInput();
+        }
+
+        public override string PartOne()
+        {
+            _left = new(_lines.Length);
+            _right = new(_lines.Length);
 
             // Part 1
-            foreach (var line in lines)
+            foreach (var line in _lines)
             {
                 var parts = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length == 2)
                 {
-                    left.Add(int.Parse(parts[0]));
-                    right.Add(int.Parse(parts[1]));
+                    _left.Add(int.Parse(parts[0]));
+                    _right.Add(int.Parse(parts[1]));
                 }
             }
-            left.Sort();
-            right.Sort();
+            _left.Sort();
+            _right.Sort();
 
             var totalDistance = 0;
 
-            for (int i = 0; i < left.Count; i++)
+            for (int i = 0; i < _left.Count; i++)
             {
-                totalDistance += Math.Abs(right[i] - left[i]);
+                totalDistance += Math.Abs(_right[i] - _left[i]);
             }
+            return totalDistance.ToString();
+        }
 
-            Console.WriteLine("Part 1:");
-            Console.WriteLine(totalDistance);
-
-            _stopwatch.Stop();
-            Console.WriteLine($"Elapsed: {_stopwatch.Elapsed}");
-
-            // Part 2
-            _stopwatch.Restart();
+        public override string PartTwo()
+        {
             var totalSimilarity = 0;
-            foreach (int number in left)
+            foreach (int number in _left)
             {
-                totalSimilarity += number * right.Count(n => n == number);
+                totalSimilarity += number * _right.Count(n => n == number);
             }
-            Console.WriteLine("Part 2:");
-            Console.WriteLine(totalSimilarity);
-            _stopwatch.Stop();
-            Console.WriteLine($"Elapsed: {_stopwatch.Elapsed}");
-
+            return totalSimilarity.ToString();
         }
     }
 }
