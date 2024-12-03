@@ -47,7 +47,7 @@ namespace AOC2024.Day3
             {
                 _instructions.Add(match.Index, match.Value);
             }
-            _stopwatch.Restart();
+            _stopwatch.Stop();
             return new Solution()
             {
                 Part = 1,
@@ -78,7 +78,7 @@ namespace AOC2024.Day3
                     total += int.Parse(numbers[0].Value) * int.Parse(numbers[1].Value);
                 }
             }
-            _stopwatch.Restart();
+            _stopwatch.Stop();
             return new Solution()
             {
                 Part = 2,

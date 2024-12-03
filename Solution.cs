@@ -9,7 +9,7 @@
 
         public override string ToString()
         {
-            return $"[Day: {Day}] [Part: {Part}] [Answer: {Answer}] [Elapsed: {Elapsed}]";
+            return $"[Day: {Day}] [Part: {Part}] [Answer: {Answer}] [Elapsed: {Elapsed.TotalMicroseconds}]";
         }
     }
 }
