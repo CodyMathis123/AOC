@@ -21,16 +21,13 @@ foreach (var day in days)
 {
     if (daysToExecute.Count == 0 || daysToExecute.Contains(day!.Day))
     {
-        Console.WriteLine();
-        for (int i = 0; i < 100; i++) { Console.Write('-'); };
-        Console.WriteLine();
+        Helper.PrintSeparator(day!.Day.ToString());
         var daySolutions = day!.Solve();
         foreach (var daySolution in daySolutions)
         {
             Console.WriteLine(daySolution);
         }
-        Console.WriteLine();
-        for (int i = 0; i < 100; i++) { Console.Write('-'); };
+        Helper.PrintSeparator(day!.Day.ToString());
     }
 }
 Helper.PrintChristmasTree(days.Count());

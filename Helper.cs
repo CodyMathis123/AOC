@@ -12,8 +12,6 @@ namespace AOC2024
 
         public static void PrintChristmasTree(int height)
         {
-            Console.WriteLine();
-            Console.WriteLine();
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < height - i - 1; j++)
@@ -31,6 +29,14 @@ namespace AOC2024
                 Console.Write(" ");
             }
             Console.WriteLine("|");
+        }
+
+        internal static void PrintSeparator(string thing)
+        {
+            Console.WriteLine();
+            for (int i = 0; i < 100; i++) { Console.Write(thing); };
+            Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }
