@@ -1,6 +1,6 @@
 ﻿namespace AOC2024.Day1
 {
-    internal class Day1Solution : AOCSolution
+    internal class Day1Solution : AoCSolver
     {
         public override int Day => 1;
         private readonly string[] _lines;
@@ -12,12 +12,12 @@
             _lines = GetInput();
         }
 
-        public override string PartOne()
+        public override Solution PartOne()
         {
+            _stopwatch.Restart();
             _left = new(_lines.Length);
             _right = new(_lines.Length);
 
-            // Part 1
             foreach (var line in _lines)
             {
                 var parts = line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
@@ -36,17 +36,32 @@
             {
                 totalDistance += Math.Abs(_right[i] - _left[i]);
             }
-            return totalDistance.ToString();
+            _stopwatch.Stop();
+            return new Solution()
+            {
+                Elapsed = _stopwatch.Elapsed,
+                Day = this.Day,
+                Part = 1,
+                Answer = totalDistance.ToString(),
+            };
         }
 
-        public override string PartTwo()
+        public override Solution PartTwo()
         {
+            _stopwatch.Restart();
             var totalSimilarity = 0;
             foreach (int number in _left!)
             {
                 totalSimilarity += number * _right!.Count(n => n == number);
             }
-            return totalSimilarity.ToString();
+            _stopwatch.Stop();
+            return new Solution()
+            {
+                Elapsed = _stopwatch.Elapsed,
+                Day = this.Day,
+                Part = 2,
+                Answer = totalSimilarity.ToString(),
+            };
         }
     }
 }

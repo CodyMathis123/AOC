@@ -9,21 +9,24 @@ if (args.Length > 0)
     }
 }
 
-var solutions = typeof(Program).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(AOCSolution).IsAssignableFrom(t)).ToArray();
+var solutions = typeof(Program).Assembly.GetTypes().Where(t => !t.IsAbstract && typeof(AoCSolver).IsAssignableFrom(t)).ToArray();
 
 var days = solutions
     .Where(type =>
         type.GetConstructor(Type.EmptyTypes) != null &&
-         !type.IsAbstract && typeof(AOCSolution).IsAssignableFrom(type))
-    .Select(type => Activator.CreateInstance(type) as AOCSolution)
+         !type.IsAbstract && typeof(AoCSolver).IsAssignableFrom(type))
+    .Select(type => Activator.CreateInstance(type) as AoCSolver)
     .OrderBy(c => c!.Day);
 foreach (var day in days)
 {
     if (daysToExecute.Count == 0 || daysToExecute.Contains(day!.Day))
     {
         Console.WriteLine("--------------------------------------");
-        Console.WriteLine($"Day {day!.Day}");
-        day.Solve();
+        var daySolutions = day!.Solve();
+        foreach (var daySolution in daySolutions)
+        {
+            Console.WriteLine(daySolution);
+        }
         Console.WriteLine("--------------------------------------");
     }
 }
