@@ -16,7 +16,7 @@ var days = solutions
         type.GetConstructor(Type.EmptyTypes) != null &&
          !type.IsAbstract && typeof(AOCSolution).IsAssignableFrom(type))
     .Select(type => Activator.CreateInstance(type) as AOCSolution)
-    .OrderBy(c => c?.Day);
+    .OrderBy(c => c!.Day);
 foreach (var day in days)
 {
     if (daysToExecute.Count == 0 || daysToExecute.Contains(day!.Day))
