@@ -42,9 +42,9 @@
         public override string PartTwo()
         {
             var totalSimilarity = 0;
-            foreach (int number in _left)
+            foreach (int number in _left!)
             {
-                totalSimilarity += number * _right.Count(n => n == number);
+                totalSimilarity += number * _right!.Count(n => n == number);
             }
             return totalSimilarity.ToString();
         }

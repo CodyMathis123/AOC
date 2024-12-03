@@ -1,4 +1,5 @@
 ﻿using AOC2024;
+
 var daysToExecute = new List<int>();
 if (args.Length > 0)
 {
@@ -18,11 +19,11 @@ var days = solutions
     .OrderBy(c => c?.Day);
 foreach (var day in days)
 {
-    if (daysToExecute.Count == 0 || daysToExecute.Contains(day.Day)) 
+    if (daysToExecute.Count == 0 || daysToExecute.Contains(day!.Day))
     {
         Console.WriteLine("--------------------------------------");
-        Console.WriteLine($"Day {day.Day}");
-        day?.Solve();
+        Console.WriteLine($"Day {day!.Day}");
+        day.Solve();
         Console.WriteLine("--------------------------------------");
     }
 }
